@@ -76,7 +76,8 @@ var io = require('socket.io')(server);
 
 
 app.get('/', function(req, res){
-  res.render('index', { user: req.user });
+  res.redirect('/login')
+  //res.render('index', { user: req.user });
 });
 
 app.get('/account', ensureAuthenticated, function(req, res){
