@@ -11,7 +11,7 @@ function addMessage(msg, pseudo) {
 
 function sentMessage() {
 
-    $('.submit').click(function() {
+    $('#submit').click(function() {
             audioElement.play();
         });
 
