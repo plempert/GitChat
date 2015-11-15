@@ -133,16 +133,16 @@ function ensureAuthenticated(req, res, next) {
 }
 
 io.sockets.on('connection', function (socket) {
-    socket.on('setPseudo', function (data) {
+    /*socket.on('setPseudo', function (data) {
         socket.set('pseudo', data);
-    });
+    });*/
 
     socket.on('message', function (message) {
-        socket.get('pseudo', function (error, name) {
-            var data = { 'message' : message, pseudo : name };
+        //socket.get('pseudo', function (error, name) {
+            var data = JSON.parse(message);
             socket.broadcast.emit('message', data);
-            console.log("user " + name + " send this : " + message);
-        })
+            console.log("user " + data.name + " send this : " + data.message);
+        //})
     });
 
 });
