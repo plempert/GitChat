@@ -3,7 +3,7 @@ var socket = io.connect('http://git-chat.azurewebsites.net/');
 $(document).ready(function() {
         var audioElement = document.createElement('audio');
         audioElement.setAttribute('src', 'aim.mp3');
-    };
+    });
 
 function addMessage(msg, pseudo) {
     $("#chatEntries").append('<div class="message"><p>' + pseudo + ' : ' + msg + '</p></div>');
