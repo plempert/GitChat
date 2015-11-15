@@ -1,7 +1,8 @@
 var socket = io.connect('http://git-chat.azurewebsites.net/');
+var audioElement;
 
 $(document).ready(function() {
-        var audioElement = document.createElement('audio');
+        audioElement = document.createElement('audio');
         audioElement.setAttribute('src', 'aim.mp3');
     });
 
@@ -10,10 +11,7 @@ function addMessage(msg, pseudo) {
 }
 
 function sentMessage() {
-
-    $('#submit').click(function() {
-            audioElement.play();
-        });
+    audioElement.play();
 
     if ($('#messageInput').val() != "") 
     {
