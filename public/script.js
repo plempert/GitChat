@@ -1,10 +1,20 @@
 var socket = io.connect('http://git-chat.azurewebsites.net/');
 
+$(document).ready(function() {
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('src', 'aim.mp3');
+    };
+
 function addMessage(msg, pseudo) {
     $("#chatEntries").append('<div class="message"><p>' + pseudo + ' : ' + msg + '</p></div>');
 }
 
 function sentMessage() {
+
+    $('.submit').click(function() {
+            audioElement.play();
+        });
+
     if ($('#messageInput').val() != "") 
     {
         socket.emit('message', JSON.stringify({message:$('#messageInput').val(),name:$("#pseudoInput").val()}));
@@ -24,7 +34,7 @@ function setPseudo() {
 }
 
 socket.on('message', function(data) {
-    
+
     addMessage(data['message'], data['name']);
 });
 
