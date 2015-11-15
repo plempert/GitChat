@@ -4,7 +4,7 @@ var audioElement;
 $(document).ready(function() {
         audioElement = document.createElement('audio');
         audioElement.setAttribute('src', 'aim.mp3');
-        setPseudo()
+        setPseudo();
     });
 
 function addMessage(msg, pseudo) {
@@ -38,7 +38,7 @@ socket.on('message', function(data) {
 });
 
 $(function() {
-    $("#chatControls").hide();
+    //$("#chatControls").hide();
     //$("#pseudoSet").click(function() {setPseudo()});
     $("#submit").click(function() {sentMessage();});
 });
