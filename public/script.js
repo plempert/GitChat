@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://git-chat.azurewebsites.net/');
 
 function addMessage(msg, pseudo) {
     $("#chatEntries").append('<div class="message"><p>' + pseudo + ' : ' + msg + '</p></div>');
