@@ -3,6 +3,9 @@ var express = require('express')
   , util = require('util')
   , GitHubStrategy = require('passport-github').Strategy;
 
+
+
+
 var GITHUB_CLIENT_ID = "eeaa13c57ee9c7e4a0a4"
 var GITHUB_CLIENT_SECRET = "eadb8b9b194dcfe04413325cfc5c0c0b5d3e0b50";
 
@@ -46,15 +49,18 @@ passport.use(new GitHubStrategy({
   }
 ));
 
+var app = express();
 
+var jade = require('jade');
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-
-var app = express.createServer();
 
 // configure Express
-app.configure(function() {
+//app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
+  app.set("view options", { layout: false });
   app.use(express.logger());
   app.use(express.cookieParser());
   app.use(express.bodyParser());
@@ -66,7 +72,7 @@ app.configure(function() {
   app.use(passport.session());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
-});
+//});
 
 
 app.get('/', function(req, res){
@@ -101,12 +107,16 @@ app.get('/auth/github',
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/');
+    res.redirect('/chat');
   });
 
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
+});
+
+app.get('/chat', function(req, res){
+  res.render('chat', { user: req.user });
 });
 
 app.listen(process.env.PORT || 3000);
@@ -121,3 +131,19 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')
 }
+
+io.sockets.on('connection', function (socket) {
+    socket.on('setPseudo', function (data) {
+        socket.set('pseudo', data);
+    });
+
+    socket.on('message', function (message) {
+        socket.get('pseudo', function (error, name) {
+            var data = { 'message' : message, pseudo : name };
+            socket.broadcast.emit('message', data);
+            console.log("user " + name + " send this : " + message);
+        })
+    });
+
+});
+

@@ -1,0 +1,32 @@
+<% if (!user) { %>
+    <h2>Welcome! Please log in.</h2>
+<% } else { %>
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Chat</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="script.js"></script>
+        
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>A Chat application with Node.js and Socket.io</h1>
+            </header>
+            <input type="text" id="pseudoInput">
+            <button id="pseudoSet">Set Pseudo</button>
+            <div id="chatEntries">
+                <div id="chatControls">
+                    <input type="text" id="messageInput">
+                    <button id="submit">Send</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+<% } %>
